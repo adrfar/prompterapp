@@ -1,8 +1,11 @@
+export type ScrollDirection = 'down' | 'up';
+
 export interface TeleprompterSettings {
   speedPxPerSecond: number;
   fontSizePx: number;
   lineHeight: number;
   sidePaddingPx: number;
+  scrollDirection: ScrollDirection;
   mirrorHorizontal: boolean;
   mirrorVertical: boolean;
   showGuideLine: boolean;
@@ -20,6 +23,7 @@ export const defaultSettings: TeleprompterSettings = {
   fontSizePx: 44,
   lineHeight: 1.35,
   sidePaddingPx: 32,
+  scrollDirection: 'down',
   mirrorHorizontal: false,
   mirrorVertical: false,
   showGuideLine: false
@@ -38,6 +42,14 @@ const clampNumber = (value: unknown, min: number, max: number, fallback: number)
 
 const normalizeBoolean = (value: unknown, fallback: boolean): boolean => {
   if (typeof value === 'boolean') {
+    return value;
+  }
+
+  return fallback;
+};
+
+const normalizeDirection = (value: unknown, fallback: ScrollDirection): ScrollDirection => {
+  if (value === 'up' || value === 'down') {
     return value;
   }
 
@@ -74,6 +86,7 @@ export const normalizeSettings = (value: unknown): TeleprompterSettings => {
       settingBounds.sidePaddingPx.max,
       defaultSettings.sidePaddingPx
     ),
+    scrollDirection: normalizeDirection(value.scrollDirection, defaultSettings.scrollDirection),
     mirrorHorizontal: normalizeBoolean(value.mirrorHorizontal, defaultSettings.mirrorHorizontal),
     mirrorVertical: normalizeBoolean(value.mirrorVertical, defaultSettings.mirrorVertical),
     showGuideLine: normalizeBoolean(value.showGuideLine, defaultSettings.showGuideLine)

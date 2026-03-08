@@ -42,6 +42,7 @@ describe('storage', () => {
         fontSizePx: 3,
         lineHeight: 0,
         sidePaddingPx: 300,
+        scrollDirection: 'left',
         mirrorHorizontal: 'not-a-bool'
       })
     );
@@ -52,6 +53,7 @@ describe('storage', () => {
     expect(settings.fontSizePx).toBe(24);
     expect(settings.lineHeight).toBe(1);
     expect(settings.sidePaddingPx).toBe(120);
+    expect(settings.scrollDirection).toBe('down');
     expect(settings.mirrorHorizontal).toBe(false);
   });
 });

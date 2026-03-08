@@ -9,6 +9,7 @@ Mobile-first teleprompter web app built with React + TypeScript + Vite, optimize
 - Full-screen style teleprompter viewport with internal scrolling
 - Play/Pause auto-scroll powered by `requestAnimationFrame`
 - Speed control in **pixels per second**
+- Auto-scroll direction control (up or down)
 - Font size, line height, and side padding controls
 - Horizontal and vertical mirror toggles (applied only to teleprompter content)
 - Optional center guide line

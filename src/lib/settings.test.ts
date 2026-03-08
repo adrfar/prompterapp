@@ -14,6 +14,7 @@ describe('normalizeSettings', () => {
       fontSizePx: 12,
       lineHeight: 100,
       sidePaddingPx: -10,
+      scrollDirection: 'up',
       mirrorHorizontal: true,
       mirrorVertical: false,
       showGuideLine: true
@@ -23,6 +24,7 @@ describe('normalizeSettings', () => {
     expect(normalized.fontSizePx).toBe(settingBounds.fontSizePx.min);
     expect(normalized.lineHeight).toBe(settingBounds.lineHeight.max);
     expect(normalized.sidePaddingPx).toBe(settingBounds.sidePaddingPx.min);
+    expect(normalized.scrollDirection).toBe('up');
     expect(normalized.mirrorHorizontal).toBe(true);
     expect(normalized.mirrorVertical).toBe(false);
     expect(normalized.showGuideLine).toBe(true);
@@ -34,6 +36,7 @@ describe('normalizeSettings', () => {
       fontSizePx: '40',
       lineHeight: Infinity,
       sidePaddingPx: undefined,
+      scrollDirection: 'left',
       mirrorHorizontal: 'yes',
       mirrorVertical: 1,
       showGuideLine: null

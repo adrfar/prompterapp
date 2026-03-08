@@ -17,12 +17,14 @@ describe('App integration', () => {
 
     const mirrorToggle = screen.getByTestId('mirror-horizontal-toggle');
     fireEvent.click(mirrorToggle);
+    fireEvent.click(screen.getByTestId('direction-up'));
 
     expect(window.localStorage.getItem(storageKeys.script)).toBe('Persistent script');
 
     const rawSettings = window.localStorage.getItem(storageKeys.settings);
     expect(rawSettings).not.toBeNull();
     expect(rawSettings).toContain('"mirrorHorizontal":true');
+    expect(rawSettings).toContain('"scrollDirection":"up"');
   });
 
   it('loads persisted state on mount', () => {
@@ -34,6 +36,7 @@ describe('App integration', () => {
         fontSizePx: 44,
         lineHeight: 1.35,
         sidePaddingPx: 32,
+        scrollDirection: 'up',
         mirrorHorizontal: true,
         mirrorVertical: false,
         showGuideLine: false

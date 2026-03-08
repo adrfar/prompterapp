@@ -17,7 +17,8 @@ describe('advanceAutoScroll', () => {
         virtualScrollTop,
         speedPxPerSecond,
         deltaSeconds,
-        maxScrollTop
+        maxScrollTop,
+        direction: 'down'
       });
 
       virtualScrollTop = result.nextVirtualScrollTop;
@@ -34,10 +35,25 @@ describe('advanceAutoScroll', () => {
       virtualScrollTop: 96,
       speedPxPerSecond: 50,
       deltaSeconds: 0.2,
-      maxScrollTop: 100
+      maxScrollTop: 100,
+      direction: 'down'
     });
 
     expect(result.nextVirtualScrollTop).toBe(100);
+    expect(result.reachedEnd).toBe(true);
+  });
+
+  it('moves up and stops at top boundary', () => {
+    const result = advanceAutoScroll({
+      renderedScrollTop: 5,
+      virtualScrollTop: 5,
+      speedPxPerSecond: 100,
+      deltaSeconds: 0.1,
+      maxScrollTop: 500,
+      direction: 'up'
+    });
+
+    expect(result.nextVirtualScrollTop).toBe(0);
     expect(result.reachedEnd).toBe(true);
   });
 });

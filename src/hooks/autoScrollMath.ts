@@ -1,9 +1,12 @@
+import { type ScrollDirection } from '../lib/settings';
+
 export interface AdvanceAutoScrollInput {
   renderedScrollTop: number;
   virtualScrollTop: number | null;
   speedPxPerSecond: number;
   deltaSeconds: number;
   maxScrollTop: number;
+  direction: ScrollDirection;
 }
 
 export interface AdvanceAutoScrollResult {
@@ -20,15 +23,18 @@ export const advanceAutoScroll = ({
   virtualScrollTop,
   speedPxPerSecond,
   deltaSeconds,
-  maxScrollTop
+  maxScrollTop,
+  direction
 }: AdvanceAutoScrollInput): AdvanceAutoScrollResult => {
   const base = virtualScrollTop ?? renderedScrollTop;
-  const nextVirtualScrollTop = clamp(base + speedPxPerSecond * deltaSeconds, 0, maxScrollTop);
+  const directionSign = direction === 'down' ? 1 : -1;
+  const nextVirtualScrollTop = clamp(base + speedPxPerSecond * deltaSeconds * directionSign, 0, maxScrollTop);
   const nextRenderedScrollTop = clamp(nextVirtualScrollTop, 0, maxScrollTop);
+  const reachedEnd = direction === 'down' ? nextVirtualScrollTop >= maxScrollTop : nextVirtualScrollTop <= 0;
 
   return {
     nextVirtualScrollTop,
     nextRenderedScrollTop,
-    reachedEnd: nextVirtualScrollTop >= maxScrollTop
+    reachedEnd
   };
 };

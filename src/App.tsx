@@ -4,7 +4,7 @@ import { ControlPanel } from './components/ControlPanel';
 import { TeleprompterViewport } from './components/TeleprompterViewport';
 import { extractScriptFromFile, isSupportedScriptFile } from './lib/fileParser';
 import { captureReadingPosition, restoreReadingPosition, type ReadingPosition } from './lib/readingPosition';
-import { normalizeSettings, type TeleprompterSettings } from './lib/settings';
+import { normalizeSettings, type ScrollDirection, type TeleprompterSettings } from './lib/settings';
 import { loadScript, loadSettings, saveScript, saveSettings } from './lib/storage';
 import { useAutoScroll } from './hooks/useAutoScroll';
 
@@ -71,6 +71,7 @@ export default function App(): JSX.Element {
     containerRef: viewportRef,
     isPlaying,
     speedPxPerSecond: settings.speedPxPerSecond,
+    direction: settings.scrollDirection,
     onReachedEnd: handleReachedEnd
   });
 
@@ -140,6 +141,7 @@ export default function App(): JSX.Element {
           void handleFileUpload(file);
         }}
         onSpeedChange={(value) => updateSettings({ speedPxPerSecond: value })}
+        onDirectionChange={(direction: ScrollDirection) => updateSettings({ scrollDirection: direction })}
         onFontSizeChange={(value) => updateSettings({ fontSizePx: value })}
         onLineHeightChange={(value) => updateSettings({ lineHeight: value })}
         onSidePaddingChange={(value) => updateSettings({ sidePaddingPx: value })}

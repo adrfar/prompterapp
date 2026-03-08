@@ -15,6 +15,7 @@ describe('ControlPanel', () => {
       onScriptChange: vi.fn(),
       onFileUpload: vi.fn(),
       onSpeedChange: vi.fn(),
+      onDirectionChange: vi.fn(),
       onFontSizeChange: vi.fn(),
       onLineHeightChange: vi.fn(),
       onSidePaddingChange: vi.fn(),
@@ -45,6 +46,9 @@ describe('ControlPanel', () => {
     fireEvent.change(speedSlider, { target: { value: '120' } });
     expect(callbacks.onSpeedChange).toHaveBeenCalledWith(120);
 
+    await user.click(screen.getByTestId('direction-up'));
+    expect(callbacks.onDirectionChange).toHaveBeenCalledWith('up');
+
     await user.click(screen.getByTestId('mirror-horizontal-toggle'));
     expect(callbacks.onMirrorHorizontalToggle).toHaveBeenCalledWith(true);
 
@@ -69,6 +73,7 @@ describe('ControlPanel', () => {
         onScriptChange={vi.fn()}
         onFileUpload={onFileUpload}
         onSpeedChange={vi.fn()}
+        onDirectionChange={vi.fn()}
         onFontSizeChange={vi.fn()}
         onLineHeightChange={vi.fn()}
         onSidePaddingChange={vi.fn()}

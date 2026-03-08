@@ -1,10 +1,12 @@
 import { RefObject, useEffect, useRef } from 'react';
 import { advanceAutoScroll } from './autoScrollMath';
+import { type ScrollDirection } from '../lib/settings';
 
 interface UseAutoScrollOptions {
   containerRef: RefObject<HTMLElement>;
   isPlaying: boolean;
   speedPxPerSecond: number;
+  direction: ScrollDirection;
   onReachedEnd?: () => void;
 }
 
@@ -12,6 +14,7 @@ export const useAutoScroll = ({
   containerRef,
   isPlaying,
   speedPxPerSecond,
+  direction,
   onReachedEnd
 }: UseAutoScrollOptions): void => {
   const rafIdRef = useRef<number | null>(null);
@@ -51,7 +54,8 @@ export const useAutoScroll = ({
         virtualScrollTop: virtualScrollTopRef.current,
         speedPxPerSecond,
         deltaSeconds,
-        maxScrollTop
+        maxScrollTop,
+        direction
       });
       virtualScrollTopRef.current = nextState.nextVirtualScrollTop;
       container.scrollTop = nextState.nextRenderedScrollTop;
@@ -77,5 +81,5 @@ export const useAutoScroll = ({
       previousTimeRef.current = null;
       virtualScrollTopRef.current = null;
     };
-  }, [containerRef, isPlaying, onReachedEnd, speedPxPerSecond]);
+  }, [containerRef, direction, isPlaying, onReachedEnd, speedPxPerSecond]);
 };

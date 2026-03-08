@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef } from 'react';
 
-import { settingBounds, type TeleprompterSettings } from '../lib/settings';
+import { settingBounds, type ScrollDirection, type TeleprompterSettings } from '../lib/settings';
 
 interface ControlPanelProps {
   script: string;
@@ -14,6 +14,7 @@ interface ControlPanelProps {
   onScriptChange: (script: string) => void;
   onFileUpload: (file: File | null) => void;
   onSpeedChange: (value: number) => void;
+  onDirectionChange: (value: ScrollDirection) => void;
   onFontSizeChange: (value: number) => void;
   onLineHeightChange: (value: number) => void;
   onSidePaddingChange: (value: number) => void;
@@ -37,6 +38,7 @@ export const ControlPanel = ({
   onScriptChange,
   onFileUpload,
   onSpeedChange,
+  onDirectionChange,
   onFontSizeChange,
   onLineHeightChange,
   onSidePaddingChange,
@@ -130,6 +132,32 @@ export const ControlPanel = ({
               onChange={(event) => onSpeedChange(parseSliderValue(event))}
               data-testid="speed-slider"
             />
+
+            <fieldset className="direction-fieldset" data-testid="direction-fieldset">
+              <legend className="slider-label">Auto-Scroll Direction</legend>
+              <label className="direction-option" htmlFor="scroll-direction-down">
+                <input
+                  id="scroll-direction-down"
+                  type="radio"
+                  name="scroll-direction"
+                  checked={settings.scrollDirection === 'down'}
+                  onChange={() => onDirectionChange('down')}
+                  data-testid="direction-down"
+                />
+                Down
+              </label>
+              <label className="direction-option" htmlFor="scroll-direction-up">
+                <input
+                  id="scroll-direction-up"
+                  type="radio"
+                  name="scroll-direction"
+                  checked={settings.scrollDirection === 'up'}
+                  onChange={() => onDirectionChange('up')}
+                  data-testid="direction-up"
+                />
+                Up
+              </label>
+            </fieldset>
 
             <label className="slider-label" htmlFor="font-size-slider">
               Font Size ({Math.round(settings.fontSizePx)} px)
